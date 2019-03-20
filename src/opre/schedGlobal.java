@@ -5,4 +5,13 @@ package opre;
  */
 
 public class schedGlobal {
+	private schedRR RR;
+	private schedSJF SJF;
+	
+	private Task runningTask = null;
+	
+	public void start(){
+		
+	}
+	
 }

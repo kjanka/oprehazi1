@@ -9,7 +9,7 @@ import java.util.LinkedList;
  * A program egy statikus tobbszintu, globalisan preemptiv, statikus prioritasos utemezo mukodeset szimulalja.
  * A futtatott algoritmusok:
  * kernel szint (1): prio 1/magas, SJF utemezo |SHORTEST JOB TIME FIRST|
- * felhasznaloi szint (2): prio 0/alacsony RR utemezo, idoszelet: 2 |RESPONSE RATIO|
+ * felhasznaloi szint (2): prio 0/alacsony RR utemezo, idoszelet: 2 |ROUND ROBIN|
  */
 public class Main {
 
