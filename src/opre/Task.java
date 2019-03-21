@@ -18,7 +18,7 @@ public class Task {
         this.prio = p;
         this.startTime = s;
         this.burstTime = b;
-		this.ran = b;
+		this.ran = 0;
     }
 
     public Task(){}

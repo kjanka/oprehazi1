@@ -8,16 +8,27 @@ import java.util.LinkedList;
 /**
  * A program egy statikus tobbszintu, globalisan preemptiv, statikus prioritasos utemezo mukodeset szimulalja.
  * A futtatott algoritmusok:
- * kernel szint (1): prio 1/magas, SJF utemezo |SHORTEST JOB TIME FIRST|
+ * kernel szint (1): prio 1/magas, SJF utemezo |SHORTEST JOB FIRST|
  * felhasznaloi szint (2): prio 0/alacsony RR utemezo, idoszelet: 2 |ROUND ROBIN|
  */
 public class Main {
 
+    public static int time = 1;
+    public static LinkedList<Task> finalList = new LinkedList<>();
+    public static String queue = "";
+
     public static void main(String[] args) {
 
         LinkedList<Task> tasks = new LinkedList<>();
+        LinkedList<Task> rrList = new LinkedList<>();
+        LinkedList<Task> sjfList = new LinkedList<>();
 
-        //input beolvasasa
+        schedRR rr = new schedRR();
+        schedSJF sjf = new schedSJF();
+
+
+
+        //input beolvasasa es beerkezesi sorba rendezese
         int ind = 0;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -36,6 +47,18 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        schedGlobal global = new schedGlobal(tasks, rr, sjf);
+
+
+        while (global.step()){
+            //ALGORITMUS LEPESEK
+
+            time++;
+        }
+
+
 
 
 
