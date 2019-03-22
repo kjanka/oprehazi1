@@ -9,9 +9,7 @@ import java.util.LinkedList;
 public class schedSJF {
 	
 	private Task runningTask = null; //az aktualis task
-	public boolean isRunning = true;
-	private int runningTime = 0; //az aktualis task ennyi ideje fut
-	private int remTime = 0; //az aktualis task COU loketebol hatralevo ido
+	public boolean isRunning = false;
 	public LinkedList<Task> waitList = new LinkedList<Task>();
 
 	public void addTask (Task task){
@@ -22,15 +20,16 @@ public class schedSJF {
 		if(runningTask!=null) {
 			isRunning = true;
 			runningTask.run();
+
 			for(Task t: waitList){
 				t.waits();
 			}
-			if(runningTask.burstTime - runningTask.ran ==0 ){
-				Main.finalList.addLast(runningTask);
+			if(runningTask.burstTime - runningTask.ran == 0 ){
+				//Main.finishedTasks.addLast(runningTask);
 				runningTask = null;
 
 			}
-		}else if(waitList.size() >=0) {
+		}else if(!waitList.isEmpty()) {
 			 {
 			 	isRunning = true;
 				int nextTaskInd = 0;

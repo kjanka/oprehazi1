@@ -13,16 +13,12 @@ import java.util.LinkedList;
  */
 public class Main {
 
-    public static int time = 1;
-    public static LinkedList<Task> finalList = new LinkedList<>();
-    public static String queue = "";
+    public static int time = 0;
+    public static LinkedList<Task> tasks = new LinkedList<>();
+    public static LinkedList<Task> finishedTasks = new LinkedList<>();
+    public static StringBuilder queue = new StringBuilder();
 
     public static void main(String[] args) {
-
-        LinkedList<Task> tasks = new LinkedList<>();
-        LinkedList<Task> rrList = new LinkedList<>();
-        LinkedList<Task> sjfList = new LinkedList<>();
-
         schedRR rr = new schedRR();
         schedSJF sjf = new schedSJF();
 
@@ -33,7 +29,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
             String input = br.readLine();
-            while (!input.equals("\n")) {
+            while (!input.equals("")) {
                 String[] data = input.split(",");
                 Task currentTask = new Task(data[0].charAt(0), Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]));
                 if (tasks.size() == 0) {tasks.add(currentTask);}
@@ -49,14 +45,20 @@ public class Main {
         }
 
 
-        schedGlobal global = new schedGlobal(tasks, rr, sjf);
+        schedGlobal global = new schedGlobal(rr, sjf);
 
 
-        while (global.step()){
-            //ALGORITMUS LEPESEK
-
+        while (global.step() && time < 30){
+            for(Task t: tasks) {
+                if(t.startTime == time){
+                    if(t.prio == 0) {rr.addTask(t);}
+                    if(t.prio == 1) {sjf.addTask(t);}
+                }
+            }
             time++;
         }
+
+        System.out.println(queue.toString());
 
 
 

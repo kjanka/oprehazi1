@@ -14,7 +14,7 @@ public class schedRR {
 
 	private Task runningTask = null; //az aktualis task
 	public boolean isRunning = false; //megy e az utemezo (csak ha nincs magas prio task eppen)
-	private int runningTime = 0; //az aktualis task ennyi ideje fut
+	private int runningTime = 0; //ennyi ideje fut a scheduler
 	public LinkedList<Task> waitList = new LinkedList<Task>();
 
 
@@ -24,7 +24,8 @@ public class schedRR {
 
 	public void start(){
 		isRunning = true;
-		runningTask = waitList.removeFirst();
+		if(!waitList.isEmpty()) runningTask = waitList.removeFirst();
+		runningTime = 0;
 	}
 	
 	public void stop(){
@@ -37,44 +38,44 @@ public class schedRR {
 	}
 
 	public void step(){
-
-
 		if(!isRunning) {
-			runningTask.waits();
-			for (int i = 0; i <= waitList.size(); i++) {
-				waitList.get(i).waits();
+			if(!waitList.isEmpty()){
+				for (Task t: waitList){
+					t.waits();
+				}
 			}
-			return;
+
 		}
 
-		runningTime++;
+		if(!waitList.isEmpty() && (runningTime == 2 || runningTask == null)) {
+			if (runningTask != null) waitList.addLast(runningTask);
+			runningTask = waitList.removeFirst();
+			runningTime = 0;
+		}
 
-		if(runningTime == 2){
-			if(runningTask!=null){
-				runningTask.run();
-				if((runningTask.burstTime - runningTask.ran) >= 1) {
-					waitList.addLast(runningTask);
-				}else{
-					Main.finalList.addLast(runningTask);
-				}
 
+		if(runningTask!=null) {
+			if (runningTime == 2) runningTime = 0;
+			runningTask.run();
+			runningTime++;
+			System.out.println("RAN " + runningTask.id + " time: " + runningTime + "system: " + Main.time);
+			if(runningTask.burstTime - runningTask.ran == 0) {
+				Main.finishedTasks.addLast(runningTask);
 				runningTask = null;
 			}
-			if(waitList.size() > 0){
-				runningTask = waitList.removeFirst();
-			}
-
-			runningTime = 0;
-		}else {
-			if (runningTask != null) {
-				runningTask.run();
-			}
 		}
 
+		for(Task t : waitList) t.waits();
 
 
 
 
 	}
+		}
+
+
+
+
+
 	
-}
+

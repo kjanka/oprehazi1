@@ -7,45 +7,31 @@ import java.util.LinkedList;
  */
 
 public class schedGlobal {
-	private LinkedList<Task> taskList;
+
 
 
 	private schedRR rr;
 	private schedSJF sjf;
 	
-	private Task runningTask = null;
 
-	public schedGlobal(LinkedList<Task> tList, schedRR rr, schedSJF sjf){
-		this.taskList = tList;
+
+	public schedGlobal(schedRR rr, schedSJF sjf){
 		this.rr = rr;
 		this.sjf = sjf;
 	}
-	
-	public void start(){
-		
-	}
 
 	public boolean step() {
-		if (rr.waitList.size() == 0 && sjf.waitList.size() ==0 && taskList.size() ==0) {
-			return false;
+		if(Main.time == 0){
+			return true;
 		}
-		boolean ok = true;
-		while (ok) {
-			if (taskList.getFirst().startTime <= Main.time-1) {
-				if(taskList.getFirst().prio ==1) sjf.addTask(taskList.removeFirst());
-				if(taskList.getFirst().prio ==0) rr.addTask(taskList.removeFirst());
-			}else {
-				ok = false;
-			}
-		}
-
-		if(!sjf.isRunning){
-			rr.step();
-		}else{
+		else if(sjf.isRunning) {
 			sjf.step();
+			if(rr.isRunning) rr.stop();
+			return true;
+		}else{
+			if(!rr.isRunning) rr.start();
+			rr.step();
+			return true;
 		}
-
-
-		return true;
 	}
 }

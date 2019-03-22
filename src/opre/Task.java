@@ -24,7 +24,18 @@ public class Task {
     public Task(){}
 	
 	public void run(){
-		ran++;
+        //System.out.println(this.id + " ran now, " + Main.time);
+        ran++;
+
+            String currentQ = Main.queue.toString();
+            if(currentQ.length()==0){
+                Main.queue.append(this.id);
+            }else {
+                if (currentQ.charAt(currentQ.length() - 1) != (this.id)) {
+                    Main.queue.append(this.id);
+                }
+            }
+
 	}
 	
 	public void waits(){
