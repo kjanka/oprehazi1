@@ -25,6 +25,10 @@ public class Task {
 	
 	public void run(){
         ran++;
+        /*
+        A futasi sorrendhez hozzaadjuk a task id-jat, ha nem o volt az utolso (is), aki kapott cpu-t
+        VEGSO OUTPUT
+         */
             String currentQ = Main.queue.toString();
             if(currentQ.length()==0){
                 Main.queue.append(this.id);
@@ -35,7 +39,10 @@ public class Task {
             }
 
 	}
-	
+	/*
+	ha varakoztatjuk a taskot, a varakozasi idejet noveljuk eggyel
+	VEGSO OUTPUT
+	 */
 	public void waits(){
 		wait++;
 	}

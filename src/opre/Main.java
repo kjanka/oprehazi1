@@ -47,8 +47,12 @@ public class Main {
 
         schedGlobal global = new schedGlobal(rr, sjf);
 
-
-        while (global.step() && time < 50){
+/*
+A globalis utemezot futtatjuk.
+Az input listabol rendszer ido szerint adjuk be a taskokat az alsobb szinten levo ket utemezobe,
+igy azok varolistaja ures lesz, ha "rendszer idohoz kepest" nincs beerkezett task.
+*/
+        while (global.step()){
             for(Task t: tasks) {
                 if(t.startTime == time){
                     if(t.prio == 0) {rr.addTask(t);}
@@ -58,8 +62,16 @@ public class Main {
             time++;
         }
 
-        System.out.println(queue.toString());
-
+        /*
+        VEGSO OUTPUT:
+        A queue stringbuilderbe minden task beleirja magat futaskor, ez a futtatasi sorrend
+        A masik output a varakozasi idok, ehhez a befejezett taskok (vegso) listajat
+        es az input listat hasznaljuk fel, ezutobbit nem modositjuk futtatas kozben.
+        A beerkezesi idot az input listan beluli sorrend hatarozza meg, a befejezett taskok
+        listajaban pedig a varakozasi idok osszege van, amit a taskok novelnek minden
+        varakozas alatt.
+         */
+        System.out.println(queue.toString()); //futasi sorrend
         StringBuilder waitB = new StringBuilder();
         for(Task t: tasks){
             waitB.append(t.id);
@@ -73,7 +85,7 @@ public class Main {
             waitB.append(',');
         }
         waitB.setLength(waitB.length() - 1);
-        System.out.print(waitB.toString());
+        System.out.print(waitB.toString()); //varakozasi idok
 
 
 
