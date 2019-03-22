@@ -58,7 +58,7 @@ public class schedRR {
 			if (runningTime == 2) runningTime = 0;
 			runningTask.run();
 			runningTime++;
-			System.out.println("RAN " + runningTask.id + " time: " + runningTime + "system: " + Main.time);
+			System.out.println("rr RAN " + runningTask.id + " time: " + runningTime + "system: " + Main.time);
 			if(runningTask.burstTime - runningTask.ran == 0) {
 				Main.finishedTasks.addLast(runningTask);
 				runningTask = null;
