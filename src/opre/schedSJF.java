@@ -16,34 +16,39 @@ public class schedSJF {
 		waitList.addLast(task);
 	}
 
+	public void start(){
+		if(!waitList.isEmpty()){
+			isRunning = true;
+		}
+	}
+
 	public void step() {
 		if (runningTask == null) {
-
 			if (waitList.isEmpty()) {
 				isRunning = false;
 				return;
-			} else {
+			} else{
 				int minJind = 0;
 				Task nextTask = waitList.getFirst();
-				for (int i = 0; i <= waitList.size(); i++) {
+				for (int i = 0; i <= waitList.size() - 1; i++) {
 					if (waitList.get(i).burstTime < nextTask.burstTime) {
 						minJind = i;
 						nextTask = waitList.get(i);
 					}
 				}
 				runningTask = waitList.remove(minJind);
-
 			}
 		}
 		if (!waitList.isEmpty()) {
+			isRunning = true;
 			for (Task t : waitList) {
 				t.waits();
 			}
 		}
 		isRunning = true;
 		runningTask.run();
-		System.out.println("sjf RAN " + runningTask.id + "system: " + Main.time);
 		if (runningTask.burstTime - runningTask.ran == 0) {
+			if(waitList.isEmpty()){isRunning = false;}
 			Main.finishedTasks.addLast(runningTask);
 			runningTask = null;
 		}

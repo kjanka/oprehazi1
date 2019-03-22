@@ -17,7 +17,6 @@ public class schedRR {
 	private int runningTime = 0; //ennyi ideje fut a scheduler
 	public LinkedList<Task> waitList = new LinkedList<Task>();
 
-
 	public void addTask (Task task){
 	    waitList.addLast(task);
     }
@@ -27,7 +26,6 @@ public class schedRR {
 		if(!waitList.isEmpty()) runningTask = waitList.removeFirst();
 		runningTime = 0;
 	}
-	
 	public void stop(){
 		isRunning = false;
 		if(runningTask != null){
@@ -36,7 +34,6 @@ public class schedRR {
         }
 		runningTime = 0;
 	}
-
 	public void step(){
 		if(!isRunning) {
 			if(!waitList.isEmpty()){
@@ -44,9 +41,8 @@ public class schedRR {
 					t.waits();
 				}
 			}
-
+			return;
 		}
-
 		if(!waitList.isEmpty() && (runningTime == 2 || runningTask == null)) {
 			if (runningTask != null) waitList.addLast(runningTask);
 			runningTask = waitList.removeFirst();
@@ -58,17 +54,13 @@ public class schedRR {
 			if (runningTime == 2) runningTime = 0;
 			runningTask.run();
 			runningTime++;
-			System.out.println("rr RAN " + runningTask.id + " time: " + runningTime + "system: " + Main.time);
 			if(runningTask.burstTime - runningTask.ran == 0) {
+				if(waitList.isEmpty()){isRunning = false;}
 				Main.finishedTasks.addLast(runningTask);
 				runningTask = null;
 			}
 		}
-
 		for(Task t : waitList) t.waits();
-
-
-
 
 	}
 		}

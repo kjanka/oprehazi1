@@ -22,16 +22,27 @@ public class schedGlobal {
 
 	public boolean step() {
 		if(Main.time == 0){
+			rr.start();
+			sjf.start();
 			return true;
+
+
 		}
-		else if(sjf.isRunning) {
+		if (!sjf.isRunning && !rr.isRunning && sjf.waitList.isEmpty() && rr.waitList.isEmpty() && Main.tasks.isEmpty()){
+			return false;
+		}
+
+		if(!sjf.waitList.isEmpty() || sjf.isRunning) {
 			sjf.step();
-			if(rr.isRunning) rr.stop();
+			rr.stop();
+			rr.step();
 			return true;
 		}else{
 			if(!rr.isRunning) rr.start();
 			rr.step();
 			return true;
 		}
+
+
 	}
 }

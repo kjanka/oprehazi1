@@ -24,9 +24,7 @@ public class Task {
     public Task(){}
 	
 	public void run(){
-        //System.out.println(this.id + " ran now, " + Main.time);
         ran++;
-
             String currentQ = Main.queue.toString();
             if(currentQ.length()==0){
                 Main.queue.append(this.id);

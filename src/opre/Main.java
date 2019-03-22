@@ -48,7 +48,7 @@ public class Main {
         schedGlobal global = new schedGlobal(rr, sjf);
 
 
-        while (global.step() && time < 30){
+        while (global.step() && time < 50){
             for(Task t: tasks) {
                 if(t.startTime == time){
                     if(t.prio == 0) {rr.addTask(t);}
@@ -59,6 +59,21 @@ public class Main {
         }
 
         System.out.println(queue.toString());
+
+        StringBuilder waitB = new StringBuilder();
+        for(Task t: tasks){
+            waitB.append(t.id);
+            waitB.append(':');
+            int wait = 0;
+            for(Task s: finishedTasks){
+                if(t.id == s.id){
+                    waitB.append(s.wait);
+                }
+            }
+            waitB.append(',');
+        }
+        waitB.setLength(waitB.length() - 1);
+        System.out.print(waitB.toString());
 
 
 
