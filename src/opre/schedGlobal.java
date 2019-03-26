@@ -35,7 +35,7 @@ public class schedGlobal {
 		ha egyik utemezo sem fut, mindket varolista is ures es az osszes taskot feldolgoztuk mar, akkor vege mindennek
 		hamissal terunk vissza
 		 */
-		if (!sjf.isRunning && !rr.isRunning && sjf.waitList.isEmpty() && rr.waitList.isEmpty() && Main.time>= Main.tasks.getLast().startTime){
+		if (!sjf.isRunning && !rr.isRunning && sjf.waitList.isEmpty() && rr.waitList.isEmpty() && Main.time> Main.tasks.getLast().startTime){
 			return false;
 		}
 		/*
