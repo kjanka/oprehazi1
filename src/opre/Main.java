@@ -29,7 +29,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
             String input = br.readLine();
-            while (!input.equals("")) {
+            while ((input != null) && !("").equals(input)) {
                 String[] data = input.split(",");
                 Task currentTask = new Task(data[0].charAt(0), Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]));
                 if (tasks.size() == 0) {tasks.add(currentTask);}
